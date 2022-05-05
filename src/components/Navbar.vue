@@ -1,5 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav
+    class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-2 border-dark"
+  >
     <div class="container">
       <router-link class="navbar-brand ff-paytone" to="/">MetaWall</router-link>
       <div class="d-flex align-items-center">
