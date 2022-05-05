@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-items-center">
-    <AvatarBlock :size="size" :imgUrl="imgUrl" />
+    <Avatar :size="size" :imgUrl="imgUrl" />
     <div class="ms-3">
       <RouterLink :to="userPageUrl" class="fw-bold text-black mb-0">
         {{ name }}
@@ -13,7 +13,7 @@
 </template>
 <script setup>
 import { RouterLink } from 'vue-router';
-import AvatarBlock from './AvatarBlock.vue';
+import Avatar from './Avatar.vue';
 
 defineProps({
   size: {

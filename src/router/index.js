@@ -1,27 +1,30 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import Home from '../views/Home.vue';
 
 const routes = [
   {
+    // 前台頁
     path: '/',
     name: 'Home',
-    component: Home,
+    component: () => import('../views/FrontEnd/FrontView.vue'),
+    children: [
+      {
+        path: '',
+        name: '全體動態牆',
+        component: () => import('../views/FrontEnd/PostsView.vue'),
+      },
+      {
+        path: 'composition',
+        name: 'composition',
+        component: () => import('../views/CompositionView.vue'),
+      },
+    ],
   },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  },
-  {
-    path: '/composition',
-    name: 'composition',
-    component: () => import('../views/CompositionView.vue'),
-  },
+
   // 404 not found
-  { path: '/:pathMatch(.*)*', component: () => import('../views/NotFoundView.vue') },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('../views/NotFoundView.vue'),
+  },
 ];
 
 const router = createRouter({

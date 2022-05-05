@@ -18,7 +18,7 @@
     <IconButton>
       <IconThumbsUp />
     </IconButton>
-    <AvatarBlock size="50" />
+    <Avatar size="50" />
     <UserInfo name="邊緣小杰" subTitle="2022/1/10 12:00"></UserInfo>
   </div>
 </template>
@@ -27,6 +27,6 @@
 import IconBell from '@/components/icons/IconBell.vue';
 import IconThumbsUp from '@/components/icons/IconThumbsUp.vue';
 import IconButton from '@/components/IconButton.vue';
-import AvatarBlock from '@/components/AvatarBlock.vue';
+import Avatar from '@/components/Avatar.vue';
 import UserInfo from '@/components/UserInfo.vue';
 </script>
