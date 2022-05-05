@@ -12,25 +12,21 @@
       <button type="button" class="btn btn-light me-7">Light</button>
       <button type="button" class="btn btn-dark">Dark</button>
     </div>
-    <ul class="fs-1 d-flex gap-3">
-      <li><i class="bi bi-alarm"></i></li>
-      <li><i class="bi bi-arrow-down-circle"></i></li>
-      <li><i class="bi bi-arrow-through-heart-fill"></i></li>
-      <li><i class="bi bi-badge-4k-fill"></i></li>
-    </ul>
-
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <IconButton>
+      <IconBell />
+    </IconButton>
+    <IconButton>
+      <IconThumbsUp />
+    </IconButton>
+    <AvatarBlock size="50" />
+    <UserInfo name="邊緣小杰" subTitle="2022/1/10 12:00"></UserInfo>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
-
-export default {
-  name: 'Home',
-  components: {
-    HelloWorld,
-  },
-};
+<script setup>
+import IconBell from '@/components/icons/IconBell.vue';
+import IconThumbsUp from '@/components/icons/IconThumbsUp.vue';
+import IconButton from '@/components/IconButton.vue';
+import AvatarBlock from '@/components/AvatarBlock.vue';
+import UserInfo from '@/components/UserInfo.vue';
 </script>

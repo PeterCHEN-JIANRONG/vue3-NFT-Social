@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -35,11 +36,7 @@
           transform="translate(-1085.524 -119.997)"
           fill="#fff"
         />
-        <g
-          id="Group_1"
-          data-name="Group 1"
-          transform="translate(72.214 41.051)"
-        >
+        <g id="Group_1" data-name="Group 1" transform="translate(72.214 41.051)">
           <path
             id="Path_5"
             data-name="Path 5"
@@ -223,11 +220,7 @@
           transform="translate(-1107.168 -51.439)"
           fill="#03438d"
         />
-        <g
-          id="Group_2"
-          data-name="Group 2"
-          transform="translate(263.31 13.753)"
-        >
+        <g id="Group_2" data-name="Group 2" transform="translate(263.31 13.753)">
           <path
             id="Path_31"
             data-name="Path 31"
