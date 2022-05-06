@@ -1,0 +1,7 @@
+.icon__button {
+  background: $info;
+  &:hover {
+    background: $primary;
+    color: $white;
+  }
+}

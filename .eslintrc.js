@@ -19,6 +19,7 @@ module.exports = {
         ignoredNodes: ['TemplateLiteral'],
       },
     ],
+    'max-len': 'off',
   },
   // defineProps、defineEmits 未定義錯誤
   globals: {
