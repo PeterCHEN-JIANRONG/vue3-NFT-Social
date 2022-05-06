@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading" :z-index="1060" />
   <div
     class="border border-2 border-dark mb-3 bg-white position-relative shadow-block"
   >
@@ -45,8 +46,11 @@
 
 <script setup>
 import { ref, inject } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const axios = inject('axios'); // inject axios
+const isLoading = ref(false);
 const content = ref('');
 const image = ref('');
 
@@ -58,18 +62,23 @@ const formReset = () => {
 
 const createPost = () => {
   const data = {
-    user: '6270fbb7113547594f0c1bf9',
+    // user: '6270fbb7113547594f0c1bf9',
+    user: '6270fbd2113547594f0c1bff',
+    // user: '6270fbca113547594f0c1bfd',
+    // user: '6270fbc3113547594f0c1bfb',
     content: content.value,
     image: image.value,
     tags: ['出遊', '快樂的心情'],
     type: 'person',
   };
   const url = `${process.env.VUE_APP_API}posts`;
+  isLoading.value = true;
   axios
     .post(url, data)
-    .then((res) => {
-      console.log(res.data);
+    .then(() => {
       formReset();
+      isLoading.value = false;
+      router.push('/');
     })
     .catch((err) => {
       console.log(err);

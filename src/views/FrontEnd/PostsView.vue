@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading" :z-index="1060" />
   <div class="row gx-3 gy-2 mb-3">
     <div class="col-md-4">
       <select
@@ -51,12 +52,14 @@ const axios = inject('axios'); // inject axios
 const posts = ref([]);
 const searchKey = ref('');
 const sort = ref('desc');
+const isLoading = ref(false);
 
 const getPosts = () => {
+  isLoading.value = true;
   const url = `${process.env.VUE_APP_API}posts?timeSort=${sort.value}&q=${searchKey.value}`;
   axios.get(url).then((res) => {
-    console.log(res.data.data);
     posts.value = res.data.data;
+    isLoading.value = false;
   });
 };
 

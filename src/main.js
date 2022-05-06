@@ -5,6 +5,11 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import { dateTime } from '@/libs/filters';
 
+import Loading from 'vue3-loading-overlay'; // vue3-loading-overlay
+import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
+import VueSweetalert2 from 'vue-sweetalert2'; // VueSweetalert2
+import '../node_modules/sweetalert2/dist/sweetalert2.min.css';
+
 import App from './App.vue';
 import router from './router';
 
@@ -16,5 +21,7 @@ app.config.globalProperties.$filters = {
 };
 app.use(router);
 app.use(VueAxios, axios);
+app.use(VueSweetalert2);
+app.component('Loading', Loading);
 app.provide('axios', app.config.globalProperties.axios); // provide 'axios'
 app.mount('#app');
