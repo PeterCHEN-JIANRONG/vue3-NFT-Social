@@ -2,29 +2,29 @@
   height: calc(100vh);
 }
 
-.h-15s {
-  height: 250px;
+.h-10s {
+  height: 160px;
 }
 
-.h-19s {
-  height: 300px;
+.h-20s {
+  height: 320px;
 }
 
 @include media-breakpoint-up(md) {
-  .h-md-19s {
-    height: 300px;
+  .h-md-10s {
+    height: 160px;
+  }
+
+  .h-md-20s {
+    height: 320px;
   }
 }
 @include media-breakpoint-up(lg) {
-  .h-lg-22s {
-    height: 350px;
+  .h-lg-10s {
+    height: 160px;
   }
-}
 
-.mh-10s {
-  min-height: 150px;
-}
-
-.w-13s {
-  width: 200px;
+  .h-lg-20s {
+    height: 320px;
+  }
 }
