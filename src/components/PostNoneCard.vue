@@ -1,5 +1,5 @@
 <template>
-  <div class="post__card border border-2 border-dark">
+  <div class="shadow__post border border-2 border-dark">
     <div class="border-bottom border-2 border-dark p-3">
       <span class="dot"></span>
     </div>
@@ -10,11 +10,6 @@
 </template>
 
 <style lang="scss" scoped>
-.post__card {
-  border-radius: 8px;
-  box-shadow: 0px 3px 0px #000400;
-}
-
 .dot,
 .dot::before,
 .dot::after {

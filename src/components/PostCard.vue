@@ -1,5 +1,5 @@
 <template>
-  <div class="post__card border border-2 border-dark p-4">
+  <div class="shadow__post border border-2 border-dark p-4">
     <UserInfo
       class="mb-3"
       :name="post.user?.name"
@@ -29,10 +29,3 @@ defineProps({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-.post__card {
-  border-radius: 8px;
-  box-shadow: 0px 3px 0px #000400;
-}
-</style>
