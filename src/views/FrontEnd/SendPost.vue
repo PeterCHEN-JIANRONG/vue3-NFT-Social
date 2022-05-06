@@ -50,6 +50,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const axios = inject('axios'); // inject axios
+const Swal = inject('$swal');
 const isLoading = ref(false);
 const content = ref('');
 const image = ref('');
@@ -60,12 +61,25 @@ const formReset = () => {
   image.value = '';
 };
 
+// 貼文送出成功
+const postSuccess = (message) => {
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: message,
+    showConfirmButton: false,
+    timer: 1500,
+  }).then(() => {
+    router.push('/');
+  });
+};
+
 const createPost = () => {
   const data = {
     // user: '6270fbb7113547594f0c1bf9',
-    user: '6270fbd2113547594f0c1bff',
-    // user: '6270fbca113547594f0c1bfd',
     // user: '6270fbc3113547594f0c1bfb',
+    // user: '6270fbd2113547594f0c1bff',
+    user: '6270fbca113547594f0c1bfd',
     content: content.value,
     image: image.value,
     tags: ['出遊', '快樂的心情'],
@@ -78,7 +92,7 @@ const createPost = () => {
     .then(() => {
       formReset();
       isLoading.value = false;
-      router.push('/');
+      postSuccess('送出成功');
     })
     .catch((err) => {
       console.log(err);
