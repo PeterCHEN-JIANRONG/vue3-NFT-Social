@@ -34,6 +34,14 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/signin',
+    component: () => import('../views/FrontEnd/SignInView.vue'),
+  },
+  {
+    path: '/signup',
+    component: () => import('../views/FrontEnd/SignUpView.vue'),
+  },
 
   // 404 not found
   {
