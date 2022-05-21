@@ -5,6 +5,7 @@
       :name="post.user?.name"
       :subTitle="$filters.dateTime(post.createdAt)"
       :imgUrl="post.user.photo"
+      :userPageUrl="`/user/${post.user._id}`"
     />
     <p
       class="space-preline"
