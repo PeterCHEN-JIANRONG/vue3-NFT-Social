@@ -17,6 +17,7 @@ import AllRules from '@vee-validate/rules'; // 規則
 import { localize, setLocale } from '@vee-validate/i18n'; // 語系
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
+import { createPinia } from 'pinia';
 import { dateTime } from '@/utils/filters';
 
 import App from './App.vue';
@@ -40,6 +41,8 @@ const app = createApp(App);
 app.config.globalProperties.$filters = {
   dateTime,
 };
+
+app.use(createPinia());
 app.use(router);
 app.use(VueAxios, axios);
 app.use(VueSweetalert2);

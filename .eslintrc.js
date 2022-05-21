@@ -20,6 +20,7 @@ module.exports = {
       },
     ],
     'max-len': 'off',
+    'no-underscore-dangle': 'off', // 物件 key 不可有底線 ex: user._id
   },
   // defineProps、defineEmits 未定義錯誤
   globals: {

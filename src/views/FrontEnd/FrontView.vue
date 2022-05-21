@@ -1,6 +1,6 @@
 <template>
   <Loading :active="isLoading" :z-index="1060" />
-  <Navbar :imgUrl="user.photo" />
+  <Navbar :imgUrl="userStore.user?.photo" />
   <div class="container mt-3 mt-md-6">
     <div class="row">
       <div class="col-md-8">
@@ -17,11 +17,11 @@
           <ul class="menu ps-2">
             <li class="mb-4">
               <router-link
-                :to="userPath"
+                :to="`/user/${userStore.user._id}`"
                 class="d-flex align-items-center link-dark"
               >
-                <Avatar size="50" :imgUrl="user.photo" />
-                <h2 class="ms-3 mb-0">{{ user?.name }}</h2>
+                <Avatar size="50" :imgUrl="userStore.user?.photo" />
+                <h2 class="ms-3 mb-0">{{ userStore.user?.name }}</h2>
               </router-link>
             </li>
             <li class="mb-4">
@@ -53,9 +53,7 @@
   </div>
 </template>
 <script setup>
-import {
-  ref, inject, onMounted, computed,
-} from 'vue';
+import { ref, inject, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Navbar from '@/components/Navbar.vue';
 import IconBell from '@/components/icons/IconBell.vue';
@@ -64,17 +62,14 @@ import IconButton from '@/components/IconButton.vue';
 import Avatar from '@/components/Avatar.vue';
 
 import { errorAlertConstruct } from '@/utils/alertConstructHandle';
+import useUserStore from '@/stores/user';
+
+const userStore = useUserStore();
 
 const router = useRouter();
 const axios = inject('axios'); // inject axios
 const Swal = inject('$swal');
 const isLoading = ref(false);
-
-const user = ref({});
-const userPath = computed(() => {
-  const { _id } = user.value;
-  return `/user/${_id}`;
-});
 
 const checkLogin = () => {
   // get token
@@ -95,9 +90,8 @@ const checkLogin = () => {
   axios
     .get(url)
     .then((res) => {
-      user.value = res.data.user;
-      // 儲存用戶 ID
-      // localStorage.setItem('metaWall_ID', _id); // 優化 > pinia
+      // 儲存用戶資料
+      userStore.updateUser(res.data.user);
       isLoading.value = false;
     })
     .catch((err) => {
