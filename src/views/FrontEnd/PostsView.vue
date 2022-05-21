@@ -64,6 +64,6 @@ const getPosts = () => {
 };
 
 onMounted(() => {
-  getPosts();
+  // getPosts();
 });
 </script>

@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading" :z-index="1060" />
   <Navbar />
   <div class="container mt-3 mt-md-6">
     <div class="row">
@@ -52,11 +53,51 @@
   </div>
 </template>
 <script setup>
+import { ref, inject, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import Navbar from '@/components/Navbar.vue';
 import IconBell from '@/components/icons/IconBell.vue';
 import IconThumbsUp from '@/components/icons/IconThumbsUp.vue';
 import IconButton from '@/components/IconButton.vue';
 import Avatar from '@/components/Avatar.vue';
+
+import { errorAlertConstruct } from '@/libs/alertConstructHandle';
+
+const router = useRouter();
+const axios = inject('axios'); // inject axios
+const Swal = inject('$swal');
+const isLoading = ref(false);
+
+const checkLogin = () => {
+  // get token
+  const token = localStorage.getItem('metaWall');
+
+  if (!token) {
+    Swal.fire(errorAlertConstruct('登入失敗', '請重新登入'));
+    router.push('/signin');
+    return;
+  }
+
+  // set axios token
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  const url = `${process.env.VUE_APP_API}/user/profile`;
+  isLoading.value = true;
+  axios
+    .get(url)
+    .then(() => {
+      // 儲存用戶 ID
+      isLoading.value = false;
+    })
+    .catch((err) => {
+      isLoading.value = false;
+      Swal.fire(errorAlertConstruct('登入失敗', err.response.data.message));
+      router.push('/signin');
+    });
+};
+
+onMounted(() => {
+  checkLogin();
+});
 </script>
 
 <style lang="scss" scoped>
