@@ -47,6 +47,7 @@
 <script setup>
 import { ref, inject } from 'vue';
 import { useRouter } from 'vue-router';
+import useUserStore from '@/stores/user';
 
 const router = useRouter();
 const axios = inject('axios'); // inject axios
@@ -55,6 +56,8 @@ const isLoading = ref(false);
 const content = ref('');
 const image = ref('');
 
+const userStore = useUserStore();
+
 // const form = ref(null); // 取 form 洞元素
 const formReset = () => {
   content.value = '';
@@ -62,37 +65,35 @@ const formReset = () => {
 };
 
 // 貼文送出成功
-const postSuccess = (message) => {
+const postSuccess = (title, text, path) => {
   Swal.fire({
     position: 'center',
     icon: 'success',
-    title: message,
+    title,
+    text,
     showConfirmButton: false,
     timer: 1500,
   }).then(() => {
-    router.push('/');
+    router.push(path);
   });
 };
 
 const createPost = () => {
   const data = {
-    // user: '6270fbb7113547594f0c1bf9',
-    // user: '6270fbc3113547594f0c1bfb',
-    // user: '6270fbd2113547594f0c1bff',
-    user: '6270fbca113547594f0c1bfd',
+    user: userStore.user._id,
     content: content.value,
     image: image.value,
     tags: ['出遊', '快樂的心情'],
     type: 'person',
   };
-  const url = `${process.env.VUE_APP_API}posts`;
+  const url = `${process.env.VUE_APP_API}/post`;
   isLoading.value = true;
   axios
     .post(url, data)
     .then(() => {
       formReset();
       isLoading.value = false;
-      postSuccess('送出成功');
+      postSuccess('貼文', '送出成功', '/');
     })
     .catch((err) => {
       console.log(err);
