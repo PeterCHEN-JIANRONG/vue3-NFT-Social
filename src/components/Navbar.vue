@@ -5,7 +5,7 @@
     <div class="container">
       <router-link class="navbar-brand ff-paytone" to="/">MetaWall</router-link>
       <div class="d-flex align-items-center">
-        <Avatar size="30" />
+        <Avatar size="30" :imgUrl="imgUrl" />
         <h2
           class="ff-azeret fs-6 fw-bold border-bottom border-2 border-dark ms-2 mb-0"
         >
@@ -17,4 +17,10 @@
 </template>
 <script setup>
 import Avatar from '@/components/Avatar.vue';
+
+defineProps({
+  imgUrl: {
+    type: String,
+  },
+});
 </script>

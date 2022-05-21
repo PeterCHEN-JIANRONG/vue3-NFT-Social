@@ -1,6 +1,6 @@
 <template>
   <Loading :active="isLoading" :z-index="1060" />
-  <Navbar />
+  <Navbar :imgUrl="user.photo" />
   <div class="container mt-3 mt-md-6">
     <div class="row">
       <div class="col-md-8">
@@ -17,11 +17,11 @@
           <ul class="menu ps-2">
             <li class="mb-4">
               <router-link
-                to="/personal/asdoufvhaosidfhsodifh"
+                :to="userPath"
                 class="d-flex align-items-center link-dark"
               >
-                <Avatar size="50" />
-                <h2 class="ms-3 mb-0">邊緣小杰</h2>
+                <Avatar size="50" :imgUrl="user.photo" />
+                <h2 class="ms-3 mb-0">{{ user?.name }}</h2>
               </router-link>
             </li>
             <li class="mb-4">
@@ -53,7 +53,9 @@
   </div>
 </template>
 <script setup>
-import { ref, inject, onMounted } from 'vue';
+import {
+  ref, inject, onMounted, computed,
+} from 'vue';
 import { useRouter } from 'vue-router';
 import Navbar from '@/components/Navbar.vue';
 import IconBell from '@/components/icons/IconBell.vue';
@@ -68,6 +70,12 @@ const axios = inject('axios'); // inject axios
 const Swal = inject('$swal');
 const isLoading = ref(false);
 
+const user = ref({});
+const userPath = computed(() => {
+  const { _id } = user.value;
+  return `/user/${_id}`;
+});
+
 const checkLogin = () => {
   // get token
   const token = localStorage.getItem('metaWall');
@@ -80,12 +88,16 @@ const checkLogin = () => {
 
   // set axios token
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+
+  // get user profile
   const url = `${process.env.VUE_APP_API}/user/profile`;
   isLoading.value = true;
   axios
     .get(url)
-    .then(() => {
+    .then((res) => {
+      user.value = res.data.user;
       // 儲存用戶 ID
+      // localStorage.setItem('metaWall_ID', _id); // 優化 > pinia
       isLoading.value = false;
     })
     .catch((err) => {
@@ -95,9 +107,9 @@ const checkLogin = () => {
     });
 };
 
-onMounted(() => {
-  checkLogin();
-});
+checkLogin();
+
+onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>

@@ -84,7 +84,7 @@ const isLoading = ref(false);
 
 const form = ref(null); // Form DOM
 const formData = ref({
-  email: 'apple@com.tw',
+  email: 'chloeWang@gmail.com',
   password: 'asdfasdf',
 });
 

@@ -18,7 +18,7 @@ const routes = [
         component: () => import('../views/FrontEnd/SendPost.vue'),
       },
       {
-        path: 'personal/:id',
+        path: 'user/:id',
         name: '個人頁',
         component: () => import('../views/FrontEnd/PersonalView.vue'),
       },
