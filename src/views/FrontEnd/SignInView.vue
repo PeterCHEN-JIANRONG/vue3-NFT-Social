@@ -75,7 +75,7 @@
 <script setup>
 import { ref, inject, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { errorAlertConstruct } from '@/libs/alertConstructHandle';
+import { errorAlertConstruct } from '@/utils/alertConstructHandle';
 
 const router = useRouter();
 const axios = inject('axios'); // inject axios

@@ -63,7 +63,7 @@ import IconThumbsUp from '@/components/icons/IconThumbsUp.vue';
 import IconButton from '@/components/IconButton.vue';
 import Avatar from '@/components/Avatar.vue';
 
-import { errorAlertConstruct } from '@/libs/alertConstructHandle';
+import { errorAlertConstruct } from '@/utils/alertConstructHandle';
 
 const router = useRouter();
 const axios = inject('axios'); // inject axios

@@ -17,7 +17,7 @@ import AllRules from '@vee-validate/rules'; // 規則
 import { localize, setLocale } from '@vee-validate/i18n'; // 語系
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
-import { dateTime } from '@/libs/filters';
+import { dateTime } from '@/utils/filters';
 
 import App from './App.vue';
 import router from './router';

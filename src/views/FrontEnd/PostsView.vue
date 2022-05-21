@@ -18,7 +18,7 @@ import { ref, inject, onMounted } from 'vue';
 import PostCard from '@/components/PostCard.vue';
 import PostNoneCard from '@/components/PostNoneCard.vue';
 import PostFilter from '@/components/PostFilter.vue';
-import { errorAlertConstruct } from '@/libs/alertConstructHandle';
+import { errorAlertConstruct } from '@/utils/alertConstructHandle';
 
 const axios = inject('axios'); // inject axios
 const Swal = inject('$swal');
