@@ -27,7 +27,12 @@
             >
           </li>
           <li class="border-bottom border-2 border-dark">
-            <a class="dropdown-item py-2" href="#">修改個人資料</a>
+            <a
+              class="dropdown-item py-2"
+              href="#"
+              @click.prevent="router.push('/profile')"
+              >修改個人資料</a
+            >
           </li>
           <li class="">
             <a class="dropdown-item py-2" href="#" @click.prevent="logOut"

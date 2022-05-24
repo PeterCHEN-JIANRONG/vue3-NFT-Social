@@ -48,16 +48,16 @@
 
             <div class="form-floating mb-3">
               <Field
-                id="tel"
+                id="password"
                 name="密碼"
-                type="text"
+                type="password"
                 class="form-control"
                 :class="{ 'is-invalid': errors['密碼'] }"
                 placeholder="請輸入密碼"
                 v-model="formData.password"
                 rules="required|min:8"
               />
-              <label for="tel" class="form-label"
+              <label for="password" class="form-label"
                 >密碼<span class="text-danger">*</span>
               </label>
               <ErrorMessage name="密碼" class="invalid-feedback" />
@@ -65,16 +65,16 @@
 
             <div class="form-floating mb-5">
               <Field
-                id="tel"
+                id="confirmPassword"
                 name="確認密碼"
-                type="text"
+                type="password"
                 class="form-control"
                 :class="{ 'is-invalid': errors['確認密碼'] }"
                 placeholder="請輸入確認密碼"
                 v-model="formData.confirmPassword"
                 rules="required|min:8"
               />
-              <label for="tel" class="form-label"
+              <label for="confirmPassword" class="form-label"
                 >確認密碼<span class="text-danger">*</span>
               </label>
               <ErrorMessage name="確認密碼" class="invalid-feedback" />
@@ -117,12 +117,7 @@ const Swal = inject('$swal');
 const isLoading = ref(false);
 
 const form = ref(null); // Form DOM
-const formData = ref({
-  name: 'apple',
-  email: 'apple@com.tw',
-  password: 'asdfasdf',
-  confirmPassword: 'asdfasdf',
-});
+const formData = ref({});
 
 // 貼文送出成功
 const postSuccess = (message) => {
@@ -144,8 +139,7 @@ const signUp = () => {
     .post(url, formData.value)
     .then(() => {
       isLoading.value = false;
-      // const { token } = res.data.user;
-      // localStorage.setItem('metaWall', token);
+      form.value.resetForm();
       postSuccess('註冊成功');
     })
     .catch((err) => {

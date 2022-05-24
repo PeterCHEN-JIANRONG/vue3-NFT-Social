@@ -32,6 +32,11 @@ const routes = [
         name: '我按讚的文章',
         component: () => import('../views/FrontEnd/LikesView.vue'),
       },
+      {
+        path: 'profile',
+        name: '修改個人資料',
+        component: () => import('../views/FrontEnd/ProfileView.vue'),
+      },
     ],
   },
   {

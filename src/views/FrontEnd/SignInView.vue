@@ -31,16 +31,16 @@
 
             <div class="form-floating mb-3">
               <Field
-                id="tel"
+                id="password"
                 name="密碼"
-                type="text"
+                type="password"
                 class="form-control"
                 :class="{ 'is-invalid': errors['密碼'] }"
                 placeholder="請輸入密碼"
                 v-model="formData.password"
                 rules="required|min:8"
               />
-              <label for="tel" class="form-label"
+              <label for="password" class="form-label"
                 >密碼<span class="text-danger">*</span>
               </label>
               <ErrorMessage name="密碼" class="invalid-feedback" />
@@ -83,10 +83,7 @@ const Swal = inject('$swal');
 const isLoading = ref(false);
 
 const form = ref(null); // Form DOM
-const formData = ref({
-  email: 'chloeWang@gmail.com',
-  password: 'asdfasdf',
-});
+const formData = ref({});
 
 const signIn = () => {
   isLoading.value = true;
@@ -101,7 +98,7 @@ const signIn = () => {
     })
     .catch((err) => {
       isLoading.value = false;
-      Swal.fire(errorAlertConstruct('註冊失敗', err.response.data.message));
+      Swal.fire(errorAlertConstruct('登入失敗', err.response.data.message));
     });
 };
 
