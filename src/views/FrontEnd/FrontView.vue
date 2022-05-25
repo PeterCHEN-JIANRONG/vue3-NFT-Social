@@ -51,6 +51,9 @@
       </div>
     </div>
   </div>
+  <FloatMenu
+    class="d-block d-md-none position-fixed bottom-10 start-50 translate-middle-x"
+  />
 </template>
 <script setup>
 import { ref, inject, onMounted } from 'vue';
@@ -60,6 +63,7 @@ import IconBell from '@/components/icons/IconBell.vue';
 import IconThumbsUp from '@/components/icons/IconThumbsUp.vue';
 import IconButton from '@/components/IconButton.vue';
 import Avatar from '@/components/Avatar.vue';
+import FloatMenu from '@/components/FloatMenu.vue';
 
 import { errorAlertConstruct } from '@/utils/alertConstructHandle';
 import useUserStore from '@/stores/user';

@@ -1,5 +1,10 @@
 <template>
-  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <svg
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    :style="`width: ${size}px; height: ${size}px;`"
+  >
     <path
       stroke-linecap="round"
       stroke-linejoin="round"
@@ -8,3 +13,12 @@
     />
   </svg>
 </template>
+
+<script setup>
+defineProps({
+  size: {
+    type: String,
+    default: '24',
+  },
+});
+</script>
