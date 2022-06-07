@@ -29,7 +29,7 @@ const Swal = inject('$swal');
 const posts = ref([]);
 const isLoading = ref(false);
 const route = useRoute();
-const id = ref(route.params.id);
+const userId = ref(route.params.id); // 此頁面用戶 ID
 
 // 取得個人貼文
 const getPersonalPosts = (sort = 1, searchKey = '') => {
@@ -40,7 +40,7 @@ const getPersonalPosts = (sort = 1, searchKey = '') => {
   }
 
   isLoading.value = true;
-  const url = `${process.env.VUE_APP_API}/posts/${id.value}?timeSort=${sortValue}&q=${searchKey}`;
+  const url = `${process.env.VUE_APP_API}/posts/user/${userId.value}?timeSort=${sortValue}&q=${searchKey}`;
   axios
     .get(url)
     .then((res) => {
