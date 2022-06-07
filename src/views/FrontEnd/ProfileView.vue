@@ -232,7 +232,7 @@ const modifyPassword = () => {
   isLoading.value = true;
   const url = `${process.env.VUE_APP_API}/user/updatePassword`;
   axios
-    .post(url, passwordData.value)
+    .patch(url, passwordData.value)
     .then((res) => {
       isLoading.value = false;
       form2.value.resetForm();
