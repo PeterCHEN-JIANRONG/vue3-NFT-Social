@@ -51,7 +51,7 @@
           />
           <input
             type="text"
-            class="w-100 form-control"
+            class="w-100 form-control border border-2 border-dark"
             v-model.trim="user.photo"
           />
         </div>
@@ -63,7 +63,7 @@
             id="name"
             name="暱稱"
             type="text"
-            class="form-control"
+            class="form-control border border-2 border-dark"
             :class="{ 'is-invalid': errors['暱稱'] }"
             placeholder="請輸入暱稱"
             v-model.trim="user.name"
@@ -125,7 +125,7 @@
             id="password"
             name="密碼"
             type="password"
-            class="form-control"
+            class="form-control border border-2 border-dark"
             :class="{ 'is-invalid': errors['密碼'] }"
             placeholder="請輸入密碼"
             v-model.trim="passwordData.password"
@@ -141,7 +141,7 @@
             id="confirmPassword"
             name="確認密碼"
             type="password"
-            class="form-control"
+            class="form-control border border-2 border-dark"
             :class="{ 'is-invalid': errors['確認密碼'] }"
             placeholder="請輸入確認密碼"
             v-model.trim="passwordData.confirmPassword"

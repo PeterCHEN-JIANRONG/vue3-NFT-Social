@@ -43,12 +43,12 @@
       <Avatar size="40" :imgUrl="userStore.user?.photo" class="me-2" />
       <input
         type="text"
-        class="form-control"
+        class="form-control border border-2 border-dark"
         placeholder="留言..."
         v-model.trim="comment"
       />
       <button
-        class="btn btn-primary px-6 py-2"
+        class="btn btn-primary border border-2 border-dark px-6 py-2"
         type="button"
         @click="commentPost(innerPost._id)"
         :disabled="comment.trim() === ''"
