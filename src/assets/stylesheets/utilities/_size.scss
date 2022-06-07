@@ -2,6 +2,14 @@
   height: calc(100vh);
 }
 
+.h-5s {
+  height: 80px;
+}
+
+.h-6s {
+  height: 96px;
+}
+
 .h-7s {
   height: 112px;
 }
@@ -19,6 +27,10 @@
 }
 
 @include media-breakpoint-up(md) {
+  .h-md-7s {
+    height: 112px;
+  }
+
   .h-md-10s {
     height: 160px;
   }
