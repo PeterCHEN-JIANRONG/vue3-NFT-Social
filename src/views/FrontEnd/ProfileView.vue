@@ -26,7 +26,7 @@
     </li>
   </ul>
   <div
-    class="row justify-content-center border border-2 border-dark rounded-3 p-4"
+    class="bg-white row justify-content-center border border-2 border-dark rounded-3 p-4"
   >
     <div class="col-md-8">
       <Form

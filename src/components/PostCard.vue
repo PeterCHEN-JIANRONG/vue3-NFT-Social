@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow__post border border-2 border-dark p-4">
+  <div class="bg-white shadow__post border border-2 border-dark p-4">
     <UserInfo
       class="mb-3"
       :name="innerPost.user?.name"

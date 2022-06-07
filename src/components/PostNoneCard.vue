@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow__post border border-2 border-dark">
+  <div class="bg-white shadow__post border border-2 border-dark">
     <div class="border-bottom border-2 border-dark p-3">
       <span class="dot"></span>
     </div>

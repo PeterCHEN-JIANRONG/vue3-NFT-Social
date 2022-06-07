@@ -7,7 +7,7 @@
         <router-view />
       </div>
       <div class="col-md-4 d-none d-md-block">
-        <div class="px-4 py-5 border border-2 border-dark">
+        <div class="bg-white px-4 py-5 border border-2 border-dark">
           <router-link
             to="/send"
             class="post__btn btn btn-primary btn-lg w-100 border border-2 border-dark fw-bold ff-azeret mb-4"
