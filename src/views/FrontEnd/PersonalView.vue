@@ -15,14 +15,13 @@
 
 <script setup>
 import {
-  ref, inject, onMounted, onBeforeUnmount,
+  ref, inject, onMounted, watch,
 } from 'vue';
 import { useRoute } from 'vue-router';
 import PostCard from '@/components/PostCard.vue';
 import PostNoneCard from '@/components/PostNoneCard.vue';
 import PostFilter from '@/components/PostFilter.vue';
 import { errorAlertConstruct } from '@/utils/alertConstructHandle';
-import emitter from '@/utils/emitter';
 
 const axios = inject('axios'); // inject axios
 const Swal = inject('$swal');
@@ -55,17 +54,13 @@ const getPersonalPosts = (sort = 1, searchKey = '') => {
 
 onMounted(() => {
   getPersonalPosts();
-
-  // 加入 emitter 監聽
-  emitter.on('getPersonalPosts', () => {
-    getPersonalPosts();
-  });
 });
 
-onBeforeUnmount(() => {
-  // 移除 emitter 監聽
-  emitter.off('getPersonalPosts', () => {
+// 相同路由 /profile/:id, id 參數切換
+watch(route, (curr) => {
+  if (curr.name === '個人頁' && curr.params.id) {
+    userId.value = curr.params.id;
     getPersonalPosts();
-  });
+  }
 });
 </script>

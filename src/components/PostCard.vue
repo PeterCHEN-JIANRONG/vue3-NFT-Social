@@ -53,6 +53,12 @@
         @click="commentPost(innerPost._id)"
         :disabled="comment.trim() === ''"
       >
+        <span
+          v-show="commentLoading"
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
         留言
       </button>
     </div>
@@ -157,11 +163,14 @@ const deleteLikePost = (postId) => {
 
 const comment = ref('');
 const lookAllComments = ref(false);
+const commentLoading = ref(false);
 const commentPost = (postId) => {
+  commentLoading.value = true;
   const url = `${process.env.VUE_APP_API}/post/${postId}/comment`;
   axios
     .post(url, { comment: comment.value })
     .then(() => {
+      commentLoading.value = false;
       // innerPost 加入 comment
       innerPost.value.comments.push({
         _id: new Date().toISOString(),
@@ -176,6 +185,7 @@ const commentPost = (postId) => {
       comment.value = ''; // 輸入框清空
     })
     .catch((err) => {
+      commentLoading.value = false;
       console.log(err);
     });
 };
