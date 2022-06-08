@@ -4,8 +4,8 @@
       class="mb-3"
       :name="innerPost.user?.name"
       :subTitle="$filters.dateTime(innerPost.createdAt)"
-      :imgUrl="innerPost.user.photo"
-      :userPageUrl="`/user/${innerPost.user._id}`"
+      :imgUrl="innerPost.user?.photo"
+      :userPageUrl="`/user/${innerPost.user?._id}`"
     />
     <p
       class="space-preline"

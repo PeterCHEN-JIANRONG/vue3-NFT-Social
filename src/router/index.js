@@ -37,6 +37,11 @@ const routes = [
         name: '修改個人資料',
         component: () => import('../views/FrontEnd/ProfileView.vue'),
       },
+      {
+        path: 'post/:id',
+        name: '單筆貼文頁',
+        component: () => import('../views/FrontEnd/PostView.vue'),
+      },
     ],
   },
   {
