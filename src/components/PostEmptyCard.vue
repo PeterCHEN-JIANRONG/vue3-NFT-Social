@@ -3,9 +3,7 @@
     <div class="border-bottom border-2 border-dark p-3">
       <span class="dot"></span>
     </div>
-    <p class="text-center text-muted mb-0 p-4">
-      目前尚無動態，新增一則貼文吧！
-    </p>
+    <slot></slot>
   </div>
 </template>
 

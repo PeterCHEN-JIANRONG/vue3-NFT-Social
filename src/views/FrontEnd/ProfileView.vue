@@ -1,10 +1,6 @@
 <template>
   <Loading :active="isLoading" :z-index="1060" />
-  <div
-    class="border border-2 border-dark mb-3 bg-white position-relative shadow-block"
-  >
-    <h1 class="text-center my-3">修改個人資料</h1>
-  </div>
+  <TittleBlock tittle="修改個人資料" class="mb-5" />
   <ul class="nav nav-tabs">
     <li class="nav-item">
       <a
@@ -171,6 +167,7 @@ import {
   successAlertConstruct,
 } from '@/utils/alertConstructHandle';
 import useUserStore from '@/stores/user';
+import TittleBlock from '@/components/TittleBlock.vue';
 
 const userStore = useUserStore();
 const Swal = inject('$swal');

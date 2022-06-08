@@ -54,7 +54,11 @@
     </div>
   </div>
   <PostFilter @get-posts="getPersonalPosts" />
-  <PostNoneCard v-if="posts.length === 0" />
+  <PostEmptyCard v-if="posts.length === 0">
+    <p class="text-center text-muted mb-0 p-4">
+      目前尚無動態，新增一則貼文吧！
+    </p>
+  </PostEmptyCard>
   <ul v-else>
     <li
       v-for="(item, index) in posts"
@@ -72,7 +76,7 @@ import {
 } from 'vue';
 import { useRoute } from 'vue-router';
 import PostCard from '@/components/PostCard.vue';
-import PostNoneCard from '@/components/PostNoneCard.vue';
+import PostEmptyCard from '@/components/PostEmptyCard.vue';
 import PostFilter from '@/components/PostFilter.vue';
 import { errorAlertConstruct } from '@/utils/alertConstructHandle';
 import useUserStore from '@/stores/user';

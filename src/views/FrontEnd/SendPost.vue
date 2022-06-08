@@ -1,13 +1,9 @@
 <template>
   <Loading :active="isLoading" :z-index="1060" />
-  <div
-    class="border border-2 border-dark mb-3 bg-white position-relative shadow-block"
-  >
-    <h1 class="text-center my-3">張貼動態</h1>
-  </div>
+  <TittleBlock tittle="張貼動態" />
   <form
     ref="form"
-    class="shadow__post border border-2 border-dark p-5"
+    class="shadow__post bg-white border border-2 border-dark p-5"
     @submit="createPost"
   >
     <div class="mb-3">
@@ -48,6 +44,7 @@
 import { ref, inject } from 'vue';
 import { useRouter } from 'vue-router';
 import useUserStore from '@/stores/user';
+import TittleBlock from '@/components/TittleBlock.vue';
 
 const router = useRouter();
 const axios = inject('axios'); // inject axios
@@ -100,18 +97,3 @@ const createPost = () => {
     });
 };
 </script>
-
-<style>
-.shadow-block::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  border: 2px solid #000040;
-  top: 2px;
-  right: 2px;
-  z-index: -1;
-  box-sizing: content-box;
-}
-</style>
