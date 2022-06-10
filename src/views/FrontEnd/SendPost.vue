@@ -32,7 +32,7 @@
         @change="uploadImages"
         multiple
       />
-      <div class="row row-cols-2 g-2" v-if="images.length > 0">
+      <div class="row row-cols-2 g-2 mb-2" v-if="images.length > 0">
         <div class="col" v-for="(item, index) in images" :key="item">
           <div class="position-relative image-hover">
             <img :src="item" class="w-100 h-15s img-cover" />
@@ -44,11 +44,15 @@
           </div>
         </div>
       </div>
+      <span class="fs-6 text-danger" v-if="images.length > 8"
+        >上傳圖片超過 8 張，請刪除圖片</span
+      >
     </div>
     <div class="text-center">
       <button
         type="submit"
         class="btn btn-secondary w-50 border border-2 border-dark rounded-3"
+        :disabled="images.length > 8"
       >
         送出貼文
       </button>
@@ -88,6 +92,11 @@ const postSuccess = (title, text, path) => {
 };
 
 const createPost = () => {
+  if (images.value.length > 8) {
+    Swal.fire(errorAlertConstruct('失敗', '上傳圖片超過 8 張，請刪除圖片'));
+    return;
+  }
+
   const data = {
     user: userStore.user._id,
     content: content.value,
@@ -135,7 +144,7 @@ const uploadImages = () => {
     .post(url, formData, { headers })
     .then((res) => {
       uploading.value = false;
-      images.value = res.data.data;
+      images.value = [...images.value, ...res.data.data];
     })
     .catch((err) => {
       uploading.value = false;
