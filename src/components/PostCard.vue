@@ -16,11 +16,9 @@
     >
       {{ innerPost.content }}
     </p>
-    <img
+    <imagesMultipleDisplayCard
       v-if="innerPost.image"
-      class="w-100 h-20s img-cover border border-2 border-dark rounded-3 mb-2"
-      :src="innerPost.image"
-      alt="貼文照片"
+      :images="innerPost.image"
     />
     <div class="d-flex align-items-center mb-3">
       <IconThumbsUp
@@ -100,6 +98,7 @@ import {
 import UserInfo from '@/components/UserInfo.vue';
 import IconThumbsUp from '@/components/icons/IconThumbsUp.vue';
 import IconThumbsUpFill from '@/components/icons/IconThumbsUpFill.vue';
+import imagesMultipleDisplayCard from '@/components/imagesMultipleDisplayCard.vue';
 import useUserStore from '@/stores/user';
 import Avatar from './Avatar.vue';
 

@@ -11,6 +11,10 @@
   object-position: 50%;
 }
 
+.img-brightness-1 {
+  filter: brightness(70%);
+}
+
 .img-hover-brightness-1 {
   &:hover {
     filter: brightness(70%);
