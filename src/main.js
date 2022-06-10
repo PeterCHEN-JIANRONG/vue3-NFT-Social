@@ -17,6 +17,10 @@ import AllRules from '@vee-validate/rules'; // 規則
 import { localize, setLocale } from '@vee-validate/i18n'; // 語系
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
+// vue-easy-lightbox
+import VueEasyLightbox from 'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.esm.min';
+import 'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.css';
+
 import { createPinia } from 'pinia';
 import { dateTime } from '@/utils/filters';
 
@@ -46,6 +50,7 @@ app.use(createPinia());
 app.use(router);
 app.use(VueAxios, axios);
 app.use(VueSweetalert2);
+app.use(VueEasyLightbox);
 app.component('Loading', Loading);
 app.component('Form', Form);
 app.component('Field', Field);
