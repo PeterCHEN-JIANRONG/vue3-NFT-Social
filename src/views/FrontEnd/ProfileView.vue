@@ -25,7 +25,7 @@
     class="bg-white row justify-content-center border border-2 border-dark rounded-3 p-4"
   >
     <div class="col-md-8">
-      <div class="mb-3">
+      <div v-if="sheet === 1" class="mb-3">
         <div class="mb-3 text-center">
           <img
             v-if="user.photo"
