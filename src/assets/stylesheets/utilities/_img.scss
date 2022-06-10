@@ -11,10 +11,15 @@
   object-position: 50%;
 }
 
-.img-hover {
-  transition: all 0.3s ease-out;
+.img-hover-brightness-1 {
   &:hover {
     filter: brightness(70%);
+  }
+}
+
+.img-scale-1 {
+  transition: all 0.3s ease-out;
+  &:hover {
     transform: scale(1.2, 1.2);
   }
 }

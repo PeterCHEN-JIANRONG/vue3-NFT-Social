@@ -4,7 +4,7 @@
   <form
     ref="form"
     class="shadow__post bg-white border border-2 border-dark p-5"
-    @submit="createPost"
+    @submit.prevent="createPost"
   >
     <div class="mb-3">
       <label for="content" class="form-label">貼文內容</label>
@@ -16,18 +16,34 @@
       ></textarea>
     </div>
     <div class="mb-5">
-      <label for="image" class="form-label">上傳圖片</label>
+      <label for="formFiles" class="form-label"
+        >上傳圖片
+        <span
+          v-show="uploading"
+          class="spinner-border spinner-border-sm"
+          role="status"
+        ></span>
+      </label>
       <input
-        type="text"
-        class="form-control border border-2 border-dark mb-2"
-        id="image"
-        v-model="image"
+        type="file"
+        id="formFiles"
+        class="form-control mb-2"
+        ref="formFiles"
+        @change="uploadImages"
+        multiple
       />
-      <img
-        v-if="image"
-        :src="image"
-        class="w-100 h-20s img-cover border border-2 border-dark rounded-3"
-      />
+      <div class="row row-cols-2 g-2" v-if="images.length > 0">
+        <div class="col" v-for="(item, index) in images" :key="item">
+          <div class="position-relative image-hover">
+            <img :src="item" class="w-100 h-15s img-cover" />
+            <span
+              class="position-absolute top-0 end-0 m-2 fs-6 badge bg-light text-dark cursor-pointer"
+              @click="images.splice(index, 1)"
+              >刪除</span
+            >
+          </div>
+        </div>
+      </div>
     </div>
     <div class="text-center">
       <button
@@ -45,21 +61,17 @@ import { ref, inject } from 'vue';
 import { useRouter } from 'vue-router';
 import useUserStore from '@/stores/user';
 import TittleBlock from '@/components/TittleBlock.vue';
+import { errorAlertConstruct } from '@/utils/alertConstructHandle';
 
 const router = useRouter();
-const axios = inject('axios'); // inject axios
+const axios = inject('axios');
 const Swal = inject('$swal');
 const isLoading = ref(false);
+const form = ref(null);
 const content = ref('');
-const image = ref('');
+const images = ref([]);
 
 const userStore = useUserStore();
-
-// const form = ref(null); // 取 form 洞元素
-const formReset = () => {
-  content.value = '';
-  image.value = '';
-};
 
 // 貼文送出成功
 const postSuccess = (title, text, path) => {
@@ -79,7 +91,7 @@ const createPost = () => {
   const data = {
     user: userStore.user._id,
     content: content.value,
-    image: image.value,
+    image: images.value,
     tags: ['出遊', '快樂的心情'],
     type: 'person',
   };
@@ -88,7 +100,7 @@ const createPost = () => {
   axios
     .post(url, data)
     .then(() => {
-      formReset();
+      form.value.reset();
       isLoading.value = false;
       postSuccess('貼文', '送出成功', '/');
     })
@@ -96,4 +108,49 @@ const createPost = () => {
       console.log(err);
     });
 };
+
+// 上傳大頭照
+const formFiles = ref(null);
+const uploading = ref(false);
+const uploadImages = () => {
+  // 前端阻擋
+  if (formFiles.value.files.length > 8) {
+    Swal.fire(errorAlertConstruct('失敗', '上傳圖片超過 8 張，請重新上傳'));
+    form.value.reset();
+    return;
+  }
+
+  const formData = new FormData();
+  for (let i = 0; i < formFiles.value.files.length; i += 1) {
+    const file = formFiles.value.files[i];
+    formData.append('photos', file);
+  }
+
+  const url = `${process.env.VUE_APP_API}/upload/photos`;
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+  };
+  uploading.value = true;
+  axios
+    .post(url, formData, { headers })
+    .then((res) => {
+      uploading.value = false;
+      images.value = res.data.data;
+    })
+    .catch((err) => {
+      uploading.value = false;
+      Swal.fire(errorAlertConstruct('失敗', err.response.data.message));
+    });
+};
 </script>
+
+<style lang="scss" scoped>
+.image-hover {
+  &:hover {
+    img {
+      transition: all 0.5s;
+      filter: brightness(70%);
+    }
+  }
+}
+</style>
