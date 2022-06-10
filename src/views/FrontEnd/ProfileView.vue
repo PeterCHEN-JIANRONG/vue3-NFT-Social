@@ -25,14 +25,8 @@
     class="bg-white row justify-content-center border border-2 border-dark rounded-3 p-4"
   >
     <div class="col-md-8">
-      <Form
-        v-if="sheet === 1"
-        ref="form1"
-        class=""
-        v-slot="{ errors }"
-        @submit="modifyProfile"
-      >
-        <div class="mb-3 d-flex flex-column align-items-center gap-3">
+      <div class="mb-3">
+        <div class="mb-3 text-center">
           <img
             v-if="user.photo"
             :src="user.photo"
@@ -45,12 +39,30 @@
             class="h-7s w-7s img-cover"
             alt="大頭照"
           />
-          <input
-            type="text"
-            class="w-100 form-control border border-2 border-dark"
-            v-model.trim="user.photo"
-          />
         </div>
+        <label for="formFile" class="form-label"
+          >大頭照
+          <span
+            v-show="uploading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+          ></span>
+        </label>
+        <input
+          type="file"
+          id="formFile"
+          class="form-control"
+          ref="avatar"
+          @change="uploadAvatar"
+        />
+      </div>
+      <Form
+        v-if="sheet === 1"
+        ref="form1"
+        class=""
+        v-slot="{ errors }"
+        @submit="modifyProfile"
+      >
         <div class="mb-3">
           <label for="name" class="form-label mb-1"
             >暱稱<span class="text-danger">*</span>
@@ -239,6 +251,29 @@ const modifyPassword = () => {
     })
     .catch((err) => {
       isLoading.value = false;
+      Swal.fire(errorAlertConstruct('失敗', err.response.data.message));
+    });
+};
+
+// 上傳大頭照
+const avatar = ref(null);
+const uploading = ref(false);
+const uploadAvatar = () => {
+  const formData = new FormData();
+  formData.append('avatar', avatar.value.files[0]);
+  const url = `${process.env.VUE_APP_API}/upload/avatar`;
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+  };
+  uploading.value = true;
+  axios
+    .post(url, formData, { headers })
+    .then((res) => {
+      uploading.value = false;
+      user.value.photo = res.data.data;
+    })
+    .catch((err) => {
+      uploading.value = false;
       Swal.fire(errorAlertConstruct('失敗', err.response.data.message));
     });
 };
