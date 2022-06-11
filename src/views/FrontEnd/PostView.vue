@@ -1,17 +1,18 @@
 <template>
   <Loading :active="isLoading" :z-index="1060" />
-  <PostCard :post="post" />
+  <PostCard :post="post" @delete-after="router.push('/')" />
 </template>
 
 <script setup>
 import {
   ref, inject, onMounted, watch,
 } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import PostCard from '@/components/PostCard.vue';
 import { errorAlertConstruct } from '@/utils/alertConstructHandle';
 
 const route = useRoute();
+const router = useRouter();
 const postId = ref(route.params.id); // 單筆貼文 ID
 
 const axios = inject('axios'); // inject axios
@@ -33,6 +34,7 @@ const getPost = () => {
       Swal.fire(errorAlertConstruct('失敗', err.response.data.message));
     });
 };
+
 onMounted(() => {
   getPost();
 });

@@ -65,7 +65,7 @@
       :key="item._id"
       :class="{ 'mb-3': index < posts.length - 1 }"
     >
-      <PostCard :post="item" />
+      <PostCard :post="item" @delete-after="deletePost" />
     </li>
   </ul>
 </template>
@@ -113,6 +113,12 @@ const getPersonalPosts = (sort = 1, searchKey = '') => {
 onMounted(() => {
   getPersonalPosts();
 });
+
+// 刪除一個 Post, 可不用重新 getPersonalPosts
+const deletePost = (postId) => {
+  const index = posts.value.findIndex((i) => i._id === postId);
+  posts.value.splice(index, 1);
+};
 
 // 取得個人資料
 const profile = ref({});

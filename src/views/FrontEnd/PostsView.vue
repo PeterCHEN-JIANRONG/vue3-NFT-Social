@@ -12,7 +12,7 @@
       :key="item._id"
       :class="{ 'mb-3': index < posts.length - 1 }"
     >
-      <PostCard :post="item" />
+      <PostCard :post="item" @delete-after="deletePost" />
     </li>
   </ul>
 </template>
@@ -48,6 +48,12 @@ const getPosts = (sort = 1, searchKey = '') => {
       isLoading.value = false;
       Swal.fire(errorAlertConstruct('失敗', err.response.data.message));
     });
+};
+
+// 刪除一個 Post, 可不用重新 getPosts
+const deletePost = (postId) => {
+  const index = posts.value.findIndex((i) => i._id === postId);
+  posts.value.splice(index, 1);
 };
 
 onMounted(() => {

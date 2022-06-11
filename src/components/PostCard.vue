@@ -1,12 +1,41 @@
 <template>
   <div class="bg-white shadow__post border border-2 border-dark p-4">
-    <UserInfo
-      class="mb-3"
-      :name="innerPost.user?.name"
-      :subTitle="$filters.dateTime(innerPost.createdAt)"
-      :imgUrl="innerPost.user?.photo"
-      :userPageUrl="`/user/${innerPost.user?._id}`"
-    />
+    <div class="d-flex justify-content-between mb-3">
+      <UserInfo
+        :name="innerPost.user?.name"
+        :subTitle="$filters.dateTime(innerPost.createdAt)"
+        :imgUrl="innerPost.user?.photo"
+        :userPageUrl="`/user/${innerPost.user?._id}`"
+      />
+      <div v-show="userStore.user?._id === post.user?._id" class="dropdown">
+        <button
+          class="btn btn-light dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          :disabled="deleteLoading"
+        >
+          <span
+            v-if="deleteLoading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          <IconMoreOption v-else />
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="dropdown-item" href="#"><IconEdit class="me-2" />編輯</a>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a class="dropdown-item" href="#" @click.prevent="openDelModal"
+              ><IconTrashCan class="me-2" />刪除</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <p
       class="space-preline"
       :class="{
@@ -90,6 +119,11 @@
       </template>
     </ul>
   </div>
+  <PostDelModal
+    :post="props.post"
+    ref="delModalCom"
+    @delete-post="deletePost"
+  />
 </template>
 <script setup>
 import {
@@ -98,7 +132,11 @@ import {
 import UserInfo from '@/components/UserInfo.vue';
 import IconThumbsUp from '@/components/icons/IconThumbsUp.vue';
 import IconThumbsUpFill from '@/components/icons/IconThumbsUpFill.vue';
+import IconMoreOption from '@/components/icons/IconMoreOption.vue';
+import IconEdit from '@/components/icons/IconEdit.vue';
+import IconTrashCan from '@/components/icons/IconTrashCan.vue';
 import imagesMultipleDisplayCard from '@/components/imagesMultipleDisplayCard.vue';
+import PostDelModal from '@/components/PostDelModal.vue';
 import useUserStore from '@/stores/user';
 import Avatar from './Avatar.vue';
 
@@ -113,6 +151,8 @@ const props = defineProps({
     },
   },
 });
+
+const emit = defineEmits(['delete-after']);
 
 const innerPost = ref(toRaw(props.post));
 watch(props, (curr) => {
@@ -185,6 +225,28 @@ const commentPost = (postId) => {
     })
     .catch((err) => {
       commentLoading.value = false;
+      console.log(err);
+    });
+};
+
+// 刪除貼文
+const delModalCom = ref(null);
+const deleteLoading = ref(false);
+const openDelModal = () => {
+  delModalCom.value.openModal();
+};
+const deletePost = (id) => {
+  delModalCom.value.closeModal();
+  deleteLoading.value = true;
+  const url = `${process.env.VUE_APP_API}/post/${id}`;
+  axios
+    .delete(url)
+    .then(() => {
+      deleteLoading.value = false;
+      emit('delete-after', id);
+    })
+    .catch((err) => {
+      deleteLoading.value = false;
       console.log(err);
     });
 };
