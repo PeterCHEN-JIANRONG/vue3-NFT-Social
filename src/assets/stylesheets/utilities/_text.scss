@@ -1,4 +1,10 @@
 // white-space
+// 換行 + 保留空白
+.space-prewrap {
+  white-space: pre-wrap;
+}
+
+// 換行 + 合併空白
 .space-preline {
   white-space: pre-line;
 }

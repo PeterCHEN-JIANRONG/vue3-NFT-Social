@@ -1,6 +1,6 @@
 <template>
   <Loading :active="isLoading" :z-index="1060" />
-  <Navbar :imgUrl="userStore.user?.photo" />
+  <Navbar />
   <div class="container mt-3 mt-md-6">
     <div class="row">
       <div class="col-md-8">

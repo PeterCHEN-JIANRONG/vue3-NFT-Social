@@ -32,7 +32,11 @@
         @change="uploadImages"
         multiple
       />
-      <div class="row row-cols-2 g-2 mb-2" v-if="images.length > 0">
+      <div
+        v-if="images.length > 0"
+        class="row g-2 mb-2"
+        :class="{ 'row-cols-2': images.length > 1 }"
+      >
         <div class="col" v-for="(item, index) in images" :key="item">
           <div class="position-relative image-hover">
             <img :src="item" class="w-100 h-15s img-cover" />

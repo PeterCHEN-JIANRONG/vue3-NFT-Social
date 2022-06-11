@@ -10,7 +10,7 @@
           class="d-flex align-items-center dropdown-toggle cursor-pointer"
           data-bs-toggle="dropdown"
         >
-          <Avatar size="30" :imgUrl="imgUrl" />
+          <Avatar size="30" :imgUrl="userStore.user?.photo" />
           <h2
             class="ff-azeret fs-6 fw-bold border-bottom border-2 border-dark ms-2 mb-0"
           >
@@ -22,7 +22,7 @@
             <a
               class="dropdown-item py-2"
               href="#"
-              @click.prevent="router.push(`/user/${userStore.user._id}`)"
+              @click.prevent="router.push(`/user/${userStore.user?._id}`)"
               >我的貼文牆</a
             >
           </li>
@@ -51,12 +51,6 @@ import useUserStore from '@/stores/user';
 
 const router = useRouter();
 const userStore = useUserStore();
-
-defineProps({
-  imgUrl: {
-    type: String,
-  },
-});
 
 const logOut = () => {
   localStorage.removeItem('metaWall'); // 移除 token
