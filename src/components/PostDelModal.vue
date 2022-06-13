@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
-import Modal from 'bootstrap/js/dist/modal';
+import { ref } from 'vue';
+import useBsModal from '@/mixins/modalMixin';
 
 export default {
   props: {
@@ -48,19 +48,7 @@ export default {
   emits: ['delete-post'],
   setup(props, { emit }) {
     const delModalRef = ref(null); // modal template ref
-    const bsModal = ref({}); // modal 元件
-    // let bsModal = null;
-    onMounted(() => {
-      bsModal.value = new Modal(delModalRef.value);
-    });
-
-    const openModal = () => {
-      bsModal.value.show();
-    };
-
-    const closeModal = () => {
-      bsModal.value.hide();
-    };
+    const { openModal, closeModal } = useBsModal(delModalRef); // 建立 modal 元件
 
     const deletePost = () => {
       emit('delete-post', props.post?._id);
