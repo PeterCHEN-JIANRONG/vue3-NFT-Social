@@ -58,16 +58,25 @@
       :images="innerPost.image"
     />
     <div class="d-flex align-items-center mb-3">
-      <IconThumbsUp
+      <button
+        type="button "
+        class="btn p-0"
         v-if="!innerPost.likes?.includes(userStore.user?._id)"
-        class="cursor-pointer"
         @click="likePost(innerPost._id)"
-      />
-      <IconThumbsUpFill
+        :disabled="likeLoading"
+      >
+        <IconThumbsUp />
+      </button>
+
+      <button
+        type="button"
+        class="btn p-0"
         v-if="innerPost.likes?.includes(userStore.user?._id)"
-        class="cursor-pointer"
         @click="deleteLikePost(innerPost._id)"
-      />
+        :disabled="likeLoading"
+      >
+        <IconThumbsUpFill />
+      </button>
       <span class="ms-2 fs-5">{{ innerPost.likes?.length }}</span>
     </div>
 
@@ -178,24 +187,30 @@ watch(props, (curr) => {
 //     });
 // };
 
+const likeLoading = ref(false);
 const likePost = (postId) => {
+  likeLoading.value = true;
   const url = `${process.env.VUE_APP_API}/post/${postId}/likes`;
   axios
     .post(url)
     .then(() => {
+      likeLoading.value = false;
       // innerPost 加入 userId
       innerPost.value.likes.push(userStore.user._id);
     })
     .catch((err) => {
+      likeLoading.value = false;
       console.log(err);
     });
 };
 
 const deleteLikePost = (postId) => {
+  likeLoading.value = true;
   const url = `${process.env.VUE_APP_API}/post/${postId}/likes`;
   axios
     .delete(url)
     .then(() => {
+      likeLoading.value = false;
       // innerPost 移除 userId
       const index = innerPost.value.likes.findIndex(
         (i) => i === userStore.user._id,
@@ -203,6 +218,7 @@ const deleteLikePost = (postId) => {
       innerPost.value.likes.splice(index, 1); // 移除 id
     })
     .catch((err) => {
+      likeLoading.value = false;
       console.log(err);
     });
 };
