@@ -38,10 +38,10 @@
         :class="{ 'row-cols-2': images.length > 1 }"
       >
         <div class="col" v-for="(item, index) in images" :key="item">
-          <div class="position-relative image-hover">
+          <div class="image__card position-relative">
             <img :src="item" class="w-100 h-15s img-cover" />
             <span
-              class="position-absolute top-0 end-0 m-2 fs-6 badge bg-light text-dark cursor-pointer"
+              class="image__delete position-absolute top-0 end-0 m-2 fs-6 badge bg-light text-dark cursor-pointer"
               @click="images.splice(index, 1)"
               >刪除</span
             >
@@ -158,11 +158,18 @@ const uploadImages = () => {
 </script>
 
 <style lang="scss" scoped>
-.image-hover {
-  &:hover {
+.image {
+  &__card:hover {
     img {
       transition: all 0.5s;
-      filter: brightness(70%);
+      filter: brightness(80%);
+    }
+  }
+  &__delete {
+    border-radius: 8px;
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
     }
   }
 }
