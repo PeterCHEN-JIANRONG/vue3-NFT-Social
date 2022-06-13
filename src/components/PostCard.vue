@@ -12,10 +12,10 @@
           class="btn btn-light dropdown-toggle"
           type="button"
           data-bs-toggle="dropdown"
-          :disabled="deleteLoading"
+          :disabled="deleteLoading || editLoading"
         >
           <span
-            v-if="deleteLoading"
+            v-if="deleteLoading || editLoading"
             class="spinner-border spinner-border-sm"
             role="status"
             aria-hidden="true"
@@ -24,11 +24,19 @@
         </button>
         <ul class="dropdown-menu">
           <li>
-            <a class="dropdown-item" href="#"><IconEdit class="me-2" />編輯</a>
+            <a
+              class="dropdown-item"
+              href="#"
+              @click.prevent="editModalCom.openModal()"
+              ><IconEdit class="me-2" />編輯</a
+            >
           </li>
           <li><hr class="dropdown-divider" /></li>
           <li>
-            <a class="dropdown-item" href="#" @click.prevent="openDelModal"
+            <a
+              class="dropdown-item"
+              href="#"
+              @click.prevent="delModalCom.openModal()"
               ><IconTrashCan class="me-2" />刪除</a
             >
           </li>
@@ -119,11 +127,8 @@
       </template>
     </ul>
   </div>
-  <PostDelModal
-    :post="props.post"
-    ref="delModalCom"
-    @delete-post="deletePost"
-  />
+  <PostDelModal :post="innerPost" ref="delModalCom" @delete-post="deletePost" />
+  <PostEditModal :post="innerPost" ref="editModalCom" @edit-post="editPost" />
 </template>
 <script setup>
 import {
@@ -137,6 +142,7 @@ import IconEdit from '@/components/icons/IconEdit.vue';
 import IconTrashCan from '@/components/icons/IconTrashCan.vue';
 import imagesMultipleDisplayCard from '@/components/imagesMultipleDisplayCard.vue';
 import PostDelModal from '@/components/PostDelModal.vue';
+import PostEditModal from '@/components/PostEditModal.vue';
 import useUserStore from '@/stores/user';
 import Avatar from './Avatar.vue';
 
@@ -155,6 +161,7 @@ const props = defineProps({
 const emit = defineEmits(['delete-after']);
 
 const innerPost = ref(toRaw(props.post));
+// const innerPost = ref(JSON.parse(JSON.stringify(props.post)));
 watch(props, (curr) => {
   innerPost.value = toRaw(curr.post);
 });
@@ -232,9 +239,6 @@ const commentPost = (postId) => {
 // 刪除貼文
 const delModalCom = ref(null);
 const deleteLoading = ref(false);
-const openDelModal = () => {
-  delModalCom.value.openModal();
-};
 const deletePost = (id) => {
   delModalCom.value.closeModal();
   deleteLoading.value = true;
@@ -247,6 +251,32 @@ const deletePost = (id) => {
     })
     .catch((err) => {
       deleteLoading.value = false;
+      console.log(err);
+    });
+};
+
+// 編輯貼文
+const editModalCom = ref(null);
+const editLoading = ref(false);
+const editPost = (post) => {
+  editModalCom.value.closeModal();
+  editLoading.value = true;
+  const { _id: id, content, image } = post;
+  const data = {
+    content,
+    image,
+  };
+  const url = `${process.env.VUE_APP_API}/post/${id}`;
+  axios
+    .patch(url, data)
+    .then(() => {
+      editLoading.value = false;
+      // 更新內部資料
+      innerPost.value.content = content;
+      innerPost.value.image = image;
+    })
+    .catch((err) => {
+      editLoading.value = false;
       console.log(err);
     });
 };

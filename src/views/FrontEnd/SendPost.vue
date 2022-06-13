@@ -3,7 +3,7 @@
   <TittleBlock tittle="張貼動態" />
   <form
     ref="form"
-    class="shadow__post bg-white border border-2 border-dark p-5"
+    class="shadow__post bg-white border border-2 border-dark p-5 mb-5"
     @submit.prevent="createPost"
   >
     <div class="mb-3">
@@ -34,7 +34,7 @@
       />
       <div
         v-if="images.length > 0"
-        class="row g-2 mb-2"
+        class="row g-2"
         :class="{ 'row-cols-2': images.length > 1 }"
       >
         <div class="col" v-for="(item, index) in images" :key="item">
@@ -48,15 +48,15 @@
           </div>
         </div>
       </div>
-      <span class="fs-6 text-danger" v-if="images.length > 8"
-        >上傳圖片超過 8 張，請刪除圖片</span
-      >
     </div>
     <div class="text-center">
+      <div class="mb-2" v-if="images.length > 8">
+        <span class="fs-6 text-danger">上傳圖片超過 8 張，請刪除圖片</span>
+      </div>
       <button
         type="submit"
         class="btn btn-secondary w-50 border border-2 border-dark rounded-3"
-        :disabled="images.length > 8"
+        :disabled="images.length > 8 || uploading"
       >
         送出貼文
       </button>
@@ -126,6 +126,10 @@ const createPost = () => {
 const formFiles = ref(null);
 const uploading = ref(false);
 const uploadImages = () => {
+  // 未選擇圖片
+  if (formFiles.value.files.length === 0) {
+    return;
+  }
   // 前端阻擋
   if (formFiles.value.files.length > 8) {
     Swal.fire(errorAlertConstruct('失敗', '上傳圖片超過 8 張，請重新上傳'));
